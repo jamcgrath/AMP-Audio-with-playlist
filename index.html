@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html ⚡>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="canonical" href="hello-world.html" />
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1,initial-scale=1"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+
+    <style amp-custom>
+      body {
+        padding: 1.5em;
+        font-family: Montserrat, sans-serif;
+        color: #fff;
+        background: darkslateblue;
+      }
+
+      h2 {
+        grid-area: title;
+        align-self: start;
+        margin: 0.5em 0.2em;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        color: #fff;
+      }
+      amp-selector {
+        width: 98%;
+        align-self: center;
+      }
+      .audio-player[selected][option] {
+        outline: 0px;
+      }
+      .audio-player {
+        display: none;
+      }
+      .audio-player[selected] {
+        display: block;
+      }
+      .player-container {
+        display: grid;
+        grid-template-columns: 180px minmax(300px, 600px);
+        grid-template-rows: repeat(3, 60px);
+        grid-template-areas:
+          "img title"
+          "img player"
+          "img album";
+        gap: 0 20px;
+        color: #fff;
+        background: #67658e;
+        border-radius: 5px;
+        border: 1px solid #000;
+        margin-bottom: 1em;
+      }
+      .player-container,
+      .playlist {
+        max-width: 700px;
+      }
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .playlist amp-img {
+        width: 50px;
+        height: 50px;
+        margin-right: 0.5em;
+        border-radius: 5px;
+      }
+      .album-img {
+        grid-area: img;
+        border-radius: 5px 0 0 5px;
+      }
+      .audio-player {
+        grid-area: player;
+        max-width: 600px;
+      }
+      .album-info {
+        grid-area: album;
+        color: inherit;
+        font-size: 1em;
+        margin: 0 0.75em;
+      }
+
+      .playlist {
+        background: #67658e;
+        border-radius: 5px;
+        border: 1px solid #000;
+      }
+
+      .playlist ul {
+        margin: 0;
+      }
+      .playlist-item {
+        display: flex;
+        align-items: center;
+        padding: 0.25em;
+      }
+      .playlist-item:nth-of-type(even) {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    </style>
+    <style amp-boilerplate>
+      body {
+        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+      }
+      @-webkit-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-moz-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-ms-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-o-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+    </style>
+    <noscript
+      ><style amp-boilerplate>
+        body {
+          -webkit-animation: none;
+          -moz-animation: none;
+          -ms-animation: none;
+          animation: none;
+        }
+      </style></noscript
+    >
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script
+      async
+      custom-element="amp-bind"
+      src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"
+    ></script>
+    <script
+      async
+      custom-element="amp-selector"
+      src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"
+    ></script>
+    <script
+      async
+      custom-element="amp-audio"
+      src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"
+    ></script>
+  </head>
+  <body>
+    <h1>AMP Audio with playlist</h1>
+    <div class="player-container">
+      <amp-img
+        class="album-img"
+        src="https://ia800300.us.archive.org/27/items/mia049/__ia_thumb.jpg"
+        [src]="audio.image"
+        width="180"
+        height="180"
+        layout="intrinsic"
+        alt="Instrumentally Ill EP"
+      ></amp-img>
+      <h2 [text]="audio.title">Lifelong Fiction</h2>
+      <ul class="album-info">
+        <li>Artist: <span [text]="audio.artist">Aphilas</span></li>
+        <li>Album: <span [text]="audio.album">Instrumentally Ill EP</span></li>
+      </ul>
+      <amp-selector
+        id="audioSelector"
+        layout="container"
+        on="select:AMP.setState({audio.selectAudio: event.targetOption})"
+        [selected]="audio.selectAudio"
+      >
+        <div class="audio-player" option="audio0" selected>
+          <amp-audio
+            id="audio-0"
+            width="auto"
+            height="40"
+            src="https://archive.org/download/mia049/mia49a_aphilas_-_lifelong_fiction.mp3"
+            preload
+            autoplay
+          >
+            <div fallback><p>Your browser doesn’t support HTML5 audio</p></div>
+          </amp-audio>
+        </div>
+        <div class="audio-player" option="audio1">
+          <amp-audio
+            id="audio-1"
+            width="auto"
+            height="40"
+            src="https://archive.org/download/DWK127/Kova_-_05_-_I_Keep_Secrets.mp3"
+            preload
+            autoplay
+          >
+            <div fallback><p>Your browser doesn’t support HTML5 audio</p></div>
+          </amp-audio>
+        </div>
+        <div class="audio-player" option="audio2">
+          <amp-audio
+            id="audio-2"
+            width="auto"
+            height="40"
+            src="https://archive.org/download/smt002/smt002-london-issue-01-zweisamkeit-original.mp3"
+            preload
+            autoplay
+          >
+            <div fallback><p>Your browser doesn’t support HTML5 audio</p></div>
+          </amp-audio>
+        </div>
+      </amp-selector>
+    </div>
+    <div class="playlist">
+      <ul>
+        <li
+          class="playlist-item playlist-item-0"
+          role="button"
+          on="tap:AMP.setState({
+           audio: {
+             title: 'Lifelong Fiction',
+             album: 'Instrumentally Ill EP',
+             artist: 'Aphilas', 
+             image: 'https://ia800300.us.archive.org/27/items/mia049/__ia_thumb.jpg',
+             selectAudio: 'audio0'
+           }
+          }),audio-0.play,audio-1.pause,audio-2.pause"
+        >
+          <amp-img
+            src="https://ia800300.us.archive.org/27/items/mia049/__ia_thumb.jpg"
+            width="50"
+            height="50"
+            layout="intrinsic"
+            alt=""
+          ></amp-img>
+          Lifelong Fiction by Aphilas
+        </li>
+        <li
+          class="playlist-item playlist-item-1"
+          role="button"
+          on="tap:AMP.setState({
+               audio: {
+                  title: 'I Keep Secrets',
+                  album: 'Cookin Session (EP)',
+                  artist: 'kova',
+                  image:'https://archive.org/download/DWK127/Kova_-_Cookin_Session_thumb.jpg',
+                  selectAudio: 'audio1'
+               }
+             }),audio-1.play,audio-0.pause,audio-2.pause"
+        >
+          <amp-img
+            src="https://archive.org/download/DWK127/Kova_-_Cookin_Session_thumb.jpg"
+            width="50"
+            height="50"
+            layout="intrinsic"
+            alt="Cookin Session Album Cover"
+          ></amp-img>
+          I Keep Secrest by Kova
+        </li>
+        <li
+          class="playlist-item playlist-item-2"
+          role="button"
+          on="tap:AMP.setState({
+               audio: {
+                  title: 'Zweisamkeit (original)',
+                  title: 'Zweisamkeit EP',
+                  artist: 'London Issue',
+                  image: 'https://archive.org/download/smt002/__ia_thumb.jpg',
+                  selectAudio: 'audio2'
+              }
+             }),audio-2.play,audio-0.pause,audio-1.pause"
+        >
+          <amp-img
+            src="https://archive.org/download/smt002/__ia_thumb.jpg"
+            width="50"
+            height="50"
+            layout="intrinsic"
+            alt="Zweisamkeit album cover"
+          ></amp-img>
+          Zweisamkeit (original) by London Issue
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
